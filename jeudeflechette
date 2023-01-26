@@ -1,0 +1,93 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+
+	char nomJoueur1[20], nomJoueur2[20];
+	int scoreJoueur1 = 0, scoreJoueur2 = 0;
+	int tour = 1;
+
+
+	printf("Entrez le nom du joueur 1 : ");
+	scanf("%s", nomJoueur1);
+	printf("Entrez le nom du joueur 2 : ");
+	scanf("%s", nomJoueur2);
+
+
+	while (tour <= 3) {
+
+
+		printf("\nTour %d : %s\n", tour, nomJoueur1);
+		printf("Appuyez sur * pour lancer la fleche : ");
+		getchar();
+		getchar();
+
+		int valeur = rand() % 20 + 1;
+		int multiplicateur = rand() % 3 + 1;
+
+		if (multiplicateur == 2) {
+			printf("Valeur tiree : %d (doublee)\n", valeur * 2);
+			scoreJoueur1 += valeur * 2;
+		}
+
+		else if (multiplicateur == 3) {
+			printf("Valeur tiree : %d (triplee)\n", valeur * 3);
+			scoreJoueur1 += valeur * 3;
+		}
+
+		else {
+			printf("Valeur tiree : %d\n", valeur);
+			scoreJoueur1 += valeur;
+		}
+
+
+
+		printf("\nTour %d : %s\n", tour, nomJoueur2);
+		printf("Appuyez sur * pour lancer la fleche : ");
+
+		getchar();
+
+		valeur = rand() % 20 + 1;
+		multiplicateur = rand() % 3 + 1;
+
+		if (multiplicateur == 2) {
+			printf("Valeur tiree : %d (doublee)\n", valeur * 2);
+			scoreJoueur2 += valeur * 2;
+		}
+
+		else if (multiplicateur == 3) {
+			printf("Valeur tiree : %d (triplee)\n", valeur * 3);
+			scoreJoueur2 += valeur * 3;
+		}
+
+		else {
+			printf("Valeur tiree : %d\n", valeur);
+			scoreJoueur2 += valeur;
+		}
+
+		tour++;
+	}
+
+
+	printf("\n Résultat final : \n");
+	printf("%s : %d points\n", nomJoueur1, scoreJoueur1);
+	printf("%s : %d points\n", nomJoueur2, scoreJoueur2);
+
+	if (scoreJoueur1 > scoreJoueur2) {
+		printf("%s a gagne !\n", nomJoueur1);
+	}
+
+	else if (scoreJoueur1 < scoreJoueur2) {
+		printf("%s a gagne !\n", nomJoueur2);
+	}
+
+	else {
+		printf("Egalite !\n");
+	}
+
+
+	return 0;
+}
