@@ -2,92 +2,224 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+
+void viderBuffer()
+{
+	int c = 0;
+	while (c != '\n' && c != EOF)
+	{
+		c = getchar();
+	}
+}
 
 int main() {
-
-	char nomJoueur1[20], nomJoueur2[20];
-	int scoreJoueur1 = 0, scoreJoueur2 = 0;
-	int tour = 1;
+	printf("Bonjour, \nVoici un mini jeu de flechete. \nLe but est simple il vous faut uniquement envoyer vos flechette dans la cible et faire des points !!! \nBon courage !! \n\n");
 
 
-	printf("Entrez le nom du joueur 1 : ");
-	scanf("%s", nomJoueur1);
-	printf("Entrez le nom du joueur 2 : ");
-	scanf("%s", nomJoueur2);
+	int nbChoisi;
+	do {
+		printf("============ Menu de selection des nom de joueur ============\n\n");
 
+		char joueur1[20], joueur2[20];
+		int scorej1 = 0, scorej2 = 0;
+		int segmentFermer1 = 0, segmentFermer2 = 0;
+		int flechetteLancer1 = 0, flechetteLancer2 = 0;
+		int tours = 1;
+		int vainceur = 0;
 
-	while (tour <= 3) {
+		printf("Joueur numero 1: ");
+		scanf("%s", joueur1);
+		printf("Joueur numero 2: ");
+		scanf("%s", joueur2);
 
-
-		printf("\nTour %d : %s\n", tour, nomJoueur1);
-		printf("Appuyez sur * pour lancer la fleche : ");
-		getchar();
-		getchar();
-
-		int valeur = rand() % 20 + 1;
-		int multiplicateur = rand() % 3 + 1;
-
-		if (multiplicateur == 2) {
-			printf("Valeur tiree : %d (doublee)\n", valeur * 2);
-			scoreJoueur1 += valeur * 2;
+		int results[20][4];
+		for (int i = 0; i < 20; i++) {
+			results[i][0] = i + 1;
+			results[i][1] = 0;
+			results[i][2] = 0;
+			results[i][3] = 0;
 		}
 
-		else if (multiplicateur == 3) {
-			printf("Valeur tiree : %d (triplee)\n", valeur * 3);
-			scoreJoueur1 += valeur * 3;
+		while (tours <= 20 && vainceur == 0) {
+			printf("\n\nTours %d\n", tours);
+			printf("Tours d'%s\n", joueur1);
+
+			for (int i = 0; i < 3; i++) {
+
+				viderBuffer();
+
+				printf("%s, Lancer de flechette (press *): ", joueur1);
+				char input = getchar();
+
+				while (input != '*')
+				{
+					viderBuffer();
+
+					printf("Appuyer sur * SVP : ");
+					input = getchar();
+				}
+
+				if (input == '*') {
+					flechetteLancer1++;
+
+					int score = rand() % 21;
+
+					printf("Score: %d\n", score);
+
+					if (score == 20) {
+
+						segmentFermer1++;
+						scorej1 += score;
+					}
+					else if (score == 19) {
+
+						segmentFermer1++;
+						scorej1 += score;
+					}
+					else if (score == 18) {
+
+						segmentFermer1++;
+						scorej1 += score;
+					}
+					else if (score == 17) {
+
+						segmentFermer1++;
+						scorej1 += score;
+					}
+					else if (score == 16) {
+
+						segmentFermer1++;
+						scorej1 += score;
+					}
+					else if (score == 15) {
+
+						segmentFermer1++;
+						scorej1 += score;
+					}
+					else if (score == 0) {
+
+						segmentFermer1++;
+						scorej1 += score;
+					}
+					else {
+
+						scorej1 += score;
+					}
+				}
+			}
+
+			if (segmentFermer1 == 7) {
+
+				vainceur = 1;
+				break;
+			}
+			printf("\nTours de %s \n", joueur2);
+
+			for (int i = 0; i < 3; i++) {
+				viderBuffer();
+
+				printf("%s, Lancer une flechette (press *): ", joueur2);
+				char input = getchar();
+
+				while (input != '*')
+				{
+					viderBuffer();
+
+					printf("Appuyer sur * SVP : ");
+					input = getchar();
+				}
+
+				if (input == '*') {
+
+					flechetteLancer2++;
+					int score = rand() % 21;
+					printf("Score: %d\n", score);
+
+					if (score == 20) {
+						segmentFermer2++;
+						scorej2 += score;
+					}
+					else if (score == 19) {
+						segmentFermer2++;
+						scorej2 += score;
+					}
+					else if (score == 18) {
+						segmentFermer2++;
+						scorej2 += score;
+					}
+					else if (score == 17) {
+						segmentFermer2++;
+						scorej2 += score;
+					}
+					else if (score == 16) {
+						segmentFermer2++;
+						scorej2 += score;
+					}
+					else if (score == 15) {
+						segmentFermer2++;
+						scorej2 += score;
+					}
+					else if (score == 0) {
+						segmentFermer2++;
+						scorej2 += score;
+					}
+					else {
+						scorej2 += score;
+					}
+				}
+			}
+			if (segmentFermer2 == 7) {
+				vainceur = 2;
+				break;
+			}
+			tours++;
 		}
 
-		else {
-			printf("Valeur tiree : %d\n", valeur);
-			scoreJoueur1 += valeur;
+		results[tours][1] = scorej1;
+		results[tours][2] = scorej2;
+		if (scorej1 > scorej2) {
+			results[tours][3] = 1;
+		}
+		else if (scorej2 > scorej1) {
+			results[tours][3] = 2;
 		}
 
-
-
-		printf("\nTour %d : %s\n", tour, nomJoueur2);
-		printf("Appuyez sur * pour lancer la fleche : ");
-
-		getchar();
-
-		valeur = rand() % 20 + 1;
-		multiplicateur = rand() % 3 + 1;
-
-		if (multiplicateur == 2) {
-			printf("Valeur tiree : %d (doublee)\n", valeur * 2);
-			scoreJoueur2 += valeur * 2;
+		if (vainceur == 0) {
+			if (scorej1 > scorej2) {
+				vainceur = 1;
+			}
+			else {
+				vainceur = 2;
+			}
 		}
 
-		else if (multiplicateur == 3) {
-			printf("Valeur tiree : %d (triplee)\n", valeur * 3);
-			scoreJoueur2 += valeur * 3;
+		printf("\n\nResulta par round:\n");
+		printf("Round  %s  %s  Vainceur\n", joueur1, joueur2);
+		for (int i = 0; i < 20; i++) {
+			printf("%5d %5d %5d   ", results[i][0], results[i][1], results[i][2]);
+			if (results[i][3] == 0) {
+				printf("    ");
+			}
+			else if (results[i][3] == 1) {
+				printf("%s", joueur1);
+			}
+			else {
+				printf("%s", joueur2);
+			}
+			printf("\n");
 		}
 
-		else {
-			printf("Valeur tiree : %d\n", valeur);
-			scoreJoueur2 += valeur;
+		nbChoisi = NULL;
+
+		printf("\n\nVoulez-vous rejouer ? : ");
+		scanf("%d", &nbChoisi);
+
+		if (nbChoisi == 0)
+		{
+			printf("\n\nMerci d'avoir jouer !");
 		}
 
-		tour++;
-	}
-
-
-	printf("\n Résultat final : \n");
-	printf("%s : %d points\n", nomJoueur1, scoreJoueur1);
-	printf("%s : %d points\n", nomJoueur2, scoreJoueur2);
-
-	if (scoreJoueur1 > scoreJoueur2) {
-		printf("%s a gagne !\n", nomJoueur1);
-	}
-
-	else if (scoreJoueur1 < scoreJoueur2) {
-		printf("%s a gagne !\n", nomJoueur2);
-	}
-
-	else {
-		printf("Egalite !\n");
-	}
-
+	} while (nbChoisi != 0);
 
 	return 0;
 }
